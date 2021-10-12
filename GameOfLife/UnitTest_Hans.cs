@@ -32,7 +32,7 @@ namespace GameOfLife
                 {
                     TestData.Sample3x3BoardB,
                     2,
-                    TestData.Sample3x3BoardB_After3Iterations
+                    TestData.Sample3x3BoardB_After2Iterations
                 };
 
                 yield return new object[]
@@ -40,6 +40,20 @@ namespace GameOfLife
                     TestData.Sample5x5BoardA,
                     2,
                     TestData.Sample5x5BoardA_After2Iterations
+                };
+
+                yield return new object[]
+                {
+                    TestData.Sample5x5BoardB,
+                    2,
+                    TestData.Sample5x5BoardB_After2Iterations
+                };
+
+                yield return new object[]
+                {
+                    TestData.Sample5x5BoardC,
+                    3,
+                    TestData.Sample5x5BoardC_After3Iterations
                 };
             }
 
@@ -55,10 +69,6 @@ namespace GameOfLife
                 int numberOfIterations,
                 bool[,] expectedMatrix)
             {
-                // Findings:
-                // NbMatrix has no handling for value of 2?
-                // lifeMatrix in code looks good, only NbMatrix might need updates, hence failing test
-
                 var outputMatrix = Program.MockEvaluateGameOfLife(inputMatrix, numberOfIterations);
 
                 ValidateOutputMatrix(
@@ -88,12 +98,12 @@ namespace GameOfLife
                         {
                             var outputMatrixResult = outputMatrix[horizontalCtr, verticalCtr];
 
-                            if(outputMatrixResult == 0 || 
+                            if (outputMatrixResult == 0 ||
                                outputMatrixResult == 1 ||
                                outputMatrixResult >= 4)
                                 expectedMatrix[horizontalCtr, verticalCtr].ShouldBe(false);
 
-                           else if(outputMatrixResult == 3)
+                            else if (outputMatrixResult == 3)
                                 expectedMatrix[horizontalCtr, verticalCtr].ShouldBe(true);
                         }
                     }
@@ -130,7 +140,7 @@ namespace GameOfLife
                     { false, true, false },
                 };
 
-                public static bool[,] Sample3x3BoardB_After3Iterations = new bool[,]
+                public static bool[,] Sample3x3BoardB_After2Iterations = new bool[,]
                 {
                     // Results in four diagonals as populated
                     { true, false, true },
@@ -159,6 +169,45 @@ namespace GameOfLife
                     { true, false, false, false, true },
                     { false, true, false, true, false },
                     { false, false, true, false, false },
+                };
+
+                public static bool[,] Sample5x5BoardB = new bool[,]
+                {
+                    { true, false, false, false, true },
+                    { false, true, false, true, false },
+                    { false, false, true, false, false },
+                    { false, true, false, true, false },
+                    { true, false, false, false, true },
+                };
+
+                public static bool[,] Sample5x5BoardB_After2Iterations = new bool[,]
+                {
+                    // Also results in diamong shape with empty inside
+                    // (similar to 5x5 board A)
+                    { false, false, true, false, false },
+                    { false, true, false, true, false },
+                    { true, false, false, false, true },
+                    { false, true, false, true, false },
+                    { false, false, true, false, false },
+                };
+
+                public static bool[,] Sample5x5BoardC = new bool[,]
+                {
+                    { true, true, true, true, true },
+                    { true, false, true, false, true },
+                    { true, false, true, false, true },
+                    { true, false, true, false, true },
+                    { true, true, true, true, true },
+                };
+
+                public static bool[,] Sample5x5BoardC_After3Iterations = new bool[,]
+                {
+                    // Results in some kind of vertical oblong without middle top and bottom squares
+                    { false, false, false, false, false },
+                    { true, true, false, true, true },
+                    { true, true, false, true, true },
+                    { true, true, false, true, true },
+                    { false, false, false, false, false },
                 };
 
                 #endregion

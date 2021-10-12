@@ -9,14 +9,14 @@ namespace GameOfLife
         static void Main(string[] args)
         {
             var matrix = new bool[,] {
-                { false, false, false, false, false },
-                { false, false, false, false, false },
                 { true, true, true, true, true },
-                { false, false, false, false, false },
-                { false, false, false, false, false },
+                { true, false, true, false, true },
+                { true, false, true, false, true },
+                { true, false, true, false, true },
+                { true, true, true, true, true },
             };
 
-            var iteration = 2;
+            var iteration = 3;
             EvaluateGameOfLife(matrix, iteration);
         }
 
@@ -44,6 +44,22 @@ namespace GameOfLife
                 { 1,2,3,2,1 }
             };
 
+            var outputMatix4 = new int[,] {
+                { 1, 2, 3, 2, 1, },
+                { 2, 2, 4, 2, 2, },
+                { 3, 4, 8, 4, 3, },
+                { 2, 2, 4, 2, 2, },
+                { 1, 2, 3, 2, 1, }
+            };
+
+            var outputMatix5 = new int[,] {
+                { 2, 1, 2, 1, 2 },
+                { 2, 3, 2, 3, 2 },
+                { 2, 3, 0, 3, 2 },
+                { 2, 3, 2, 3, 2 },
+                { 2, 1, 2, 1, 2 }
+            };
+
             var m1 = new bool[,] {
                 { false, false, false },
                 { true, true, true },
@@ -64,8 +80,24 @@ namespace GameOfLife
                 { false, false, false, false, false },
             };
 
-            var outputMatrixList = new List<int[,]>() { outputMatix1, outputMatix2, outputMatix3 };
-            var matrixList = new List<bool[,]>() { m1, m2, m3};
+            var m4 = new bool[,]{
+                { true, false, false, false, true },
+                { false, true, false, true, false },
+                { false, false, true, false, false },
+                { false, true, false, true, false },
+                { true, false, false, false, true },
+            };
+
+            var m5 = new bool[,]{
+                { true, true, true, true, true },
+                { true, false, true, false, true },
+                { true, false, true, false, true },
+                { true, false, true, false, true },
+                { true, true, true, true, true },
+            };
+
+            var outputMatrixList = new List<int[,]>() { outputMatix1, outputMatix2, outputMatix3, outputMatix4, outputMatix5 };
+            var matrixList = new List<bool[,]>() { m1, m2, m3, m4, m5 };
 
             foreach (var m in matrixList)
             {
@@ -231,12 +263,13 @@ namespace GameOfLife
             {
                 for (int j = 0; j <= results.GetUpperBound(1); j++)
                 {
-                    Console.Write(results[i, j] + " ");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write(results[i, j] + " ", Console.ForegroundColor);
                 }
                 Console.WriteLine();
             }
             Console.WriteLine();
-        } 
+        }
         #endregion
     }
 }
