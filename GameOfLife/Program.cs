@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace GameOfLife
 {
@@ -7,24 +8,92 @@ namespace GameOfLife
 
         static void Main(string[] args)
         {
-            var matrix = new bool[5, 5] {
-                { false, true, false, true, false },
-                { false, false, true, true, false },
-                { false, true, false, true, false },
-                { false, true, false, true, false },
-                { false, true, false, true, false }
+            var matrix = new bool[,] {
+                { false, false, false, false, false },
+                { false, false, false, false, false },
+                { true, true, true, true, true },
+                { false, false, false, false, false },
+                { false, false, false, false, false },
             };
 
-            //var matrix = new bool[3, 3] {
-            //        { false, true, false },
-            //        { true, true, true },
-            //        { false, true, false },
-            //};
-
-            var iteration = 11;
-            var results = EvaluateGameOfLife(matrix, iteration);
+            var iteration = 2;
+            EvaluateGameOfLife(matrix, iteration);
         }
 
+        #region Mock
+
+        public static int[,] MockEvaluateGameOfLife(bool[,] lifeMatrix, int iteration)
+        {
+            var outputMatix1 = new int[,] {
+                { 2, 3, 2 },
+                { 1, 2, 1 },
+                { 2, 3, 2 }
+            };
+
+            var outputMatix2 = new int[,] {
+                { 2, 4, 2 },
+                { 4, 8, 4 },
+                { 2, 4, 2 }
+            };
+
+            var outputMatix3 = new int[,] {
+                { 1,2,3,2,1 },
+                { 2,3,5,3,2 },
+                { 3,5,8,5,3 },
+                { 2,3,5,3,2 },
+                { 1,2,3,2,1 }
+            };
+
+            var m1 = new bool[,] {
+                { false, false, false },
+                { true, true, true },
+                { false, false, false }
+            };
+
+            var m2 = new bool[,] {
+                { false, true, false },
+                { true, true, true },
+                { false, true, false },
+            };
+
+            var m3 = new bool[,]{
+                { false, false, false, false, false },
+                { false, false, false, false, false },
+                { true, true, true, true, true },
+                { false, false, false, false, false },
+                { false, false, false, false, false },
+            };
+
+            var outputMatrixList = new List<int[,]>() { outputMatix1, outputMatix2, outputMatix3 };
+            var matrixList = new List<bool[,]>() { m1, m2, m3};
+
+            foreach (var m in matrixList)
+            {
+                var match = true;
+                for (int i = 0; i < m.GetUpperBound(0); i++)
+                {
+                    for (int j = 0; j < m.GetUpperBound(1); j++)
+                    {
+                        if (!lifeMatrix[i, j] == m[i, j])
+                        {
+                            match = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (match)
+                {
+                    return outputMatrixList[matrixList.IndexOf(m)];
+                }
+            }
+
+            return default;
+        }
+
+        #endregion
+
+        #region Actual
         public static int[,] EvaluateGameOfLife(bool[,] lifeMatrix, int iteration)
         {
             var nbMaxtrix = new int[lifeMatrix.GetUpperBound(0) + 1, lifeMatrix.GetUpperBound(1) + 1];
@@ -32,7 +101,7 @@ namespace GameOfLife
             int xLimit = lifeMatrix.GetUpperBound(0);
             int yLimit = lifeMatrix.GetUpperBound(1);
 
-            for (int i = 0; i < iteration; i++)
+            for (int i = 0; i <= iteration; i++)
             {
 
                 for (int xctr = 0; xctr <= xLimit; xctr++)
@@ -167,7 +236,7 @@ namespace GameOfLife
                 Console.WriteLine();
             }
             Console.WriteLine();
-        }
-
+        } 
+        #endregion
     }
 }

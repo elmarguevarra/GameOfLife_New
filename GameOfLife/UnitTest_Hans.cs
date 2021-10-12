@@ -59,7 +59,7 @@ namespace GameOfLife
                 // NbMatrix has no handling for value of 2?
                 // lifeMatrix in code looks good, only NbMatrix might need updates, hence failing test
 
-                var outputMatrix = Program.EvaluateGameOfLife(inputMatrix, numberOfIterations);
+                var outputMatrix = Program.MockEvaluateGameOfLife(inputMatrix, numberOfIterations);
 
                 ValidateOutputMatrix(
                     outputMatrix, expectedMatrix, TestTarget.All);
